@@ -1,8 +1,7 @@
 package com.lobemusonda.learnspringaop.aspects;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,22 @@ public class LoggingAspect {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Before("execution(* com.lobemusonda.learnspringaop.*.*.*(..))")
-    public void logMethodCall(JoinPoint joinPoint) {
-        logger.info("Method call - {}", joinPoint);
+    public void logMethodCallBeforeExecution(JoinPoint joinPoint) {
+        logger.info("Before Aspect - {} is called with arguments: {}", joinPoint, joinPoint.getArgs());
+    }
+
+    @After("execution(* com.lobemusonda.learnspringaop.*.*.*(..))")
+    public void logMethodCallAfterExecution(JoinPoint joinPoint) {
+        logger.info("After Aspect - {} has executed", joinPoint);
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.lobemusonda.learnspringaop.*.*.*(..))", throwing = "exception")
+    public void logMethodCallAfterException(JoinPoint joinPoint, Exception exception) {
+        logger.info("AfterThrowing Aspect - {} has thrown an exception: {}", joinPoint, exception.getMessage());
+    }
+
+    @AfterReturning(pointcut = "execution(* com.lobemusonda.learnspringaop.*.*.*(..))", returning = "resultValue")
+    public void logMethodCallAfterSuccessfulExecution(JoinPoint joinPoint, Object resultValue) {
+        logger.info("AfterReturning Aspect - {} has returned: {}", joinPoint, resultValue);
     }
 }
