@@ -1,10 +1,12 @@
 package com.lobemusonda.learnspringaop.data;
 
+import com.lobemusonda.learnspringaop.annotations.TrackTime;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class DataService2 {
 
+    @TrackTime
     public int[] retrieveData() {
         try {
             Thread.sleep(30);
