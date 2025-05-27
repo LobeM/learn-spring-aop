@@ -12,22 +12,22 @@ public class LoggingAspect {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Before("execution(* com.lobemusonda.learnspringaop.*.*.*(..))")
+    @Before("com.lobemusonda.learnspringaop.aspects.CommonPointcutConfig.dataPackageConfigUsingBean()")
     public void logMethodCallBeforeExecution(JoinPoint joinPoint) {
         logger.info("Before Aspect - {} is called with arguments: {}", joinPoint, joinPoint.getArgs());
     }
 
-    @After("execution(* com.lobemusonda.learnspringaop.*.*.*(..))")
+    @After("com.lobemusonda.learnspringaop.aspects.CommonPointcutConfig.businessPackageConfig()")
     public void logMethodCallAfterExecution(JoinPoint joinPoint) {
         logger.info("After Aspect - {} has executed", joinPoint);
     }
 
-    @AfterThrowing(pointcut = "execution(* com.lobemusonda.learnspringaop.*.*.*(..))", throwing = "exception")
+    @AfterThrowing(pointcut = "com.lobemusonda.learnspringaop.aspects.CommonPointcutConfig.businessAndDataPackageConfig()", throwing = "exception")
     public void logMethodCallAfterException(JoinPoint joinPoint, Exception exception) {
         logger.info("AfterThrowing Aspect - {} has thrown an exception: {}", joinPoint, exception.getMessage());
     }
 
-    @AfterReturning(pointcut = "execution(* com.lobemusonda.learnspringaop.*.*.*(..))", returning = "resultValue")
+    @AfterReturning(pointcut = "com.lobemusonda.learnspringaop.aspects.CommonPointcutConfig.dataPackageConfig()", returning = "resultValue")
     public void logMethodCallAfterSuccessfulExecution(JoinPoint joinPoint, Object resultValue) {
         logger.info("AfterReturning Aspect - {} has returned: {}", joinPoint, resultValue);
     }
